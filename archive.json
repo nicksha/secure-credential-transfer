@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-17T00:34:47.478891+00:00",
+  "timestamp": "2021-10-19T00:35:05.667963+00:00",
   "repo": "dimmyvi/secure-credential-transfer",
   "labels": [
     {
@@ -65,19 +65,86 @@
       "labels": [],
       "body": "",
       "createdAt": "2021-10-13T01:00:28Z",
-      "updatedAt": "2021-10-14T20:17:10Z",
+      "updatedAt": "2021-10-18T23:01:12Z",
       "baseRepository": "dimmyvi/secure-credential-transfer",
       "baseRefName": "review-10-12-2021",
       "baseRefOid": "acf3d9d2e9f8ce0ba7cde7810dee227dfcc044df",
       "headRepository": "dimmyvi/secure-credential-transfer",
       "headRefName": "main",
-      "headRefOid": "fd2f3442737fb676d6e90c50104fc9e4401c92f8",
+      "headRefOid": "1f6dda60811dd1f66743d19dc4e66b4b56a79edd",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOGL7YAs4ulb-h",
+          "commit": {
+            "abbreviatedOid": "fd2f344"
+          },
+          "author": "alexpell00",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-18T03:50:04Z",
+          "updatedAt": "2021-10-18T03:52:40Z",
+          "comments": [
+            {
+              "originalPosition": 117,
+              "body": "The receiver device can bind to the mailbox before getting the secret. I'm not sure if it is worth making that distinction here, but wanted to call it out.",
+              "createdAt": "2021-10-18T03:50:04Z",
+              "updatedAt": "2021-10-18T03:52:40Z"
+            },
+            {
+              "originalPosition": 120,
+              "body": "The sender's device is bound to the Relay server during mailbox creation. I think it would be worth adjusting the language here to make it clear that the sender's device was bound to the relay server earlier.",
+              "createdAt": "2021-10-18T03:51:52Z",
+              "updatedAt": "2021-10-18T03:52:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGL7YAs4uogIS",
+          "commit": {
+            "abbreviatedOid": "fd2f344"
+          },
+          "author": "dimmyvi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-18T17:26:36Z",
+          "updatedAt": "2021-10-18T17:26:36Z",
+          "comments": [
+            {
+              "originalPosition": 117,
+              "body": "Receiver device claims the mailbox at the time it makes a call to read secure content. \r\nReading OpenGraph display info doesn't require a claim token\r\n",
+              "createdAt": "2021-10-18T17:26:36Z",
+              "updatedAt": "2021-10-18T17:26:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGL7YAs4uogiX",
+          "commit": {
+            "abbreviatedOid": "fd2f344"
+          },
+          "author": "dimmyvi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-18T17:28:22Z",
+          "updatedAt": "2021-10-18T17:28:22Z",
+          "comments": [
+            {
+              "originalPosition": 120,
+              "body": "Thanks Alex; I think it's stated above (binding a Sender device). Here just wanted to emphasize that a pair of devices are bound to the mailbox.",
+              "createdAt": "2021-10-18T17:28:22Z",
+              "updatedAt": "2021-10-18T17:28:22Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
