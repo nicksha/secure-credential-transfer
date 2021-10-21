@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-10-19T00:35:05.667963+00:00",
+  "timestamp": "2021-10-21T00:38:50.437497+00:00",
   "repo": "dimmyvi/secure-credential-transfer",
   "labels": [
     {
@@ -65,13 +65,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2021-10-13T01:00:28Z",
-      "updatedAt": "2021-10-18T23:01:12Z",
+      "updatedAt": "2021-10-20T23:00:54Z",
       "baseRepository": "dimmyvi/secure-credential-transfer",
       "baseRefName": "review-10-12-2021",
       "baseRefOid": "acf3d9d2e9f8ce0ba7cde7810dee227dfcc044df",
       "headRepository": "dimmyvi/secure-credential-transfer",
       "headRefName": "main",
-      "headRefOid": "1f6dda60811dd1f66743d19dc4e66b4b56a79edd",
+      "headRefOid": "e05eb0b591e5fd47e09eafd9d652470cd7b57038",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -141,6 +141,66 @@
               "body": "Thanks Alex; I think it's stated above (binding a Sender device). Here just wanted to emphasize that a pair of devices are bound to the mailbox.",
               "createdAt": "2021-10-18T17:28:22Z",
               "updatedAt": "2021-10-18T17:28:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGL7YAs4uvlRT",
+          "commit": {
+            "abbreviatedOid": "fd2f344"
+          },
+          "author": "cyberrevenger",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-20T09:27:53Z",
+          "updatedAt": "2021-10-20T09:27:53Z",
+          "comments": [
+            {
+              "originalPosition": 307,
+              "body": "I would propose to split this section into several sub-sections, e.g.\r\nx.1) Sender/Receiver safety\r\n- Relay server shall be trusted by both Sender and Receiver devices\r\n- Receiver must be notified by Relay server in case integrity of provided URL was altered (*NEW1)\r\nx.2) Sender/Receiver privacy\r\n- At no time Relay server shall store or track the identities of both Sender and Receiver devices.\r\nx.3) Credential's security(Confidentiality and integrity)\r\n- Content of the mailbox shall be only visible to devices having Secret.\r\n- It is recommended to send URL to the mailbox and the Secret over different channels (out-of-band) from Sender device to Receiver device (e.g. send URL over SMS and Secret over iMessage).\r\n- Relay server MUST not receive the Secret with the MailboxIdentifier at any time.\r\n- Content of the mailbox must be protected in integrity with cryptographic checksum (*NEW2)\r\n\r\nSo this way we can categorise different aspects that contributes into overall  security of such solution \r\n\r\n*NEW1: I wanted to introduce integrity over URL\r\nIdea would be to mandate Sender to compute some(subject to discuss) form of checksum over URL and deposit on Relay server along with credential's content. Thus, when Receiver presents the URL to Relay server, the Relay server can now re-compute and verify checksum stored vs computed. Having this mechanism in place we can reduce the surface of attacks where someone will try to mess up the mailbox identifier along with a secret and try to redirect Receiver into a different mailbox created by malicious actor that might contain some sort of exploit/shell code, etc. \r\n\r\n*NEW2: Another idea that I wanted to bring forward is integrity protection over content stored in the mailbox.\r\nWe can use a Secret as a Master Key(MK) and derive ENC and MAC Keys from that MK. Therefore, ENC will be used to protect content's confidentiality and MAC Key to generate(by Sender) cryptographic checksum that can be validated by Receiver upon content download.\r\n\r\nKey derivation scheme can benefit from randomness of mailbox identifier, so subject to discuss.  ",
+              "createdAt": "2021-10-20T09:27:53Z",
+              "updatedAt": "2021-10-20T09:27:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGL7YAs4uyQkf",
+          "commit": {
+            "abbreviatedOid": "5ca7d2c"
+          },
+          "author": "dimmyvi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-20T19:47:26Z",
+          "updatedAt": "2021-10-20T19:47:26Z",
+          "comments": [
+            {
+              "originalPosition": 120,
+              "body": "Re-phrased the sentence.",
+              "createdAt": "2021-10-20T19:47:26Z",
+              "updatedAt": "2021-10-20T19:47:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGL7YAs4uyWuj",
+          "commit": {
+            "abbreviatedOid": "bf66a7e"
+          },
+          "author": "dimmyvi",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-20T20:16:11Z",
+          "updatedAt": "2021-10-20T20:16:11Z",
+          "comments": [
+            {
+              "originalPosition": 307,
+              "body": "Added bullet-points to the section. \r\n(*NEW1) When you say  \" checksum over URL \"  - do you mean\r\na checksum over URL string - like sha256(\"relay.apple.com/v1/m/1234-abcd\")?\r\nStore this in the mailbox, so each time Relay can compute the checksum over the URL actually called and match these 2?\r\nIf so, how does it work with DNS names and VIPs/ load balancers? \r\nThe actual application running on a mailbox may not know the actual dns name exposed to devices...\r\nWe can provide it to the app via configuration params, but that would not necessary be the actual dns name being called...\r\n\r\n(*NEW2)Or a checksum over the mailbox content (like MAC code)?\r\nWe currently use Authenticated encryption (AES-GCM) which provides both confidentiality(encryption) and integrity(mac) of the content. We have discussed the idea of key derivation based on the mailbox Identifier, but it seems not provide any actual security benefits. If the attacker can guess the mailbox Id, they still be able to both read the mailbox content and use the same identifier in key derivation...\r\nThus we still have 2 key attributes that guaranty security of the mailbox - a random unique mailbox Identifier and a secret based on strong cryptographic RNG.\r\n",
+              "createdAt": "2021-10-20T20:16:11Z",
+              "updatedAt": "2021-10-20T20:16:11Z"
             }
           ]
         }
